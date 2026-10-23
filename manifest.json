@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Restyle for Zulip",
   "short_name": "Restyle",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "등록한 Zulip 도메인에 깔끔한 테마를 입힙니다.",
   "minimum_chrome_version": "123",
   "permissions": ["storage", "scripting", "activeTab"],

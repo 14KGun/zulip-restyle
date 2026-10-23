@@ -222,6 +222,9 @@ function renderSettings() {
     btn.setAttribute("aria-checked", String(btn.dataset.theme === site.theme));
   }
   $("#opt-font").checked = site.font;
+  // Rank colors only exist in the discord theme.
+  $("#row-rank").hidden = site.theme !== "discord";
+  $("#opt-rank").checked = site.rankColors;
   for (const seg of document.querySelectorAll(".seg")) {
     const value = site[seg.dataset.opt];
     for (const b of seg.querySelectorAll("button")) {
@@ -262,6 +265,7 @@ async function init() {
   });
 
   $("#opt-font").addEventListener("change", (e) => updateSelected({ font: e.target.checked }));
+  $("#opt-rank").addEventListener("change", (e) => updateSelected({ rankColors: e.target.checked }));
   for (const seg of document.querySelectorAll(".seg")) {
     seg.addEventListener("click", (e) => {
       const b = e.target.closest("button");
