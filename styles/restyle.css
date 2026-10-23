@@ -115,6 +115,51 @@ html[data-zr-theme="reader"]:root {
     --zr-radius: 8px;
 }
 
+/* Always dark, like dark-pro. Sidebars sit on --zr-bg and the message area
+   on the lighter --zr-surface, as in Discord. */
+html[data-zr-theme="discord"]:root {
+    color-scheme: dark;
+    --zr-bg: #2b2d31;
+    --zr-surface: #313338;
+    --zr-surface-2: #35373c;
+    --zr-dm-surface: #313338;
+    --zr-border: #1f2023;
+    --zr-text: #dbdee1;
+    --zr-muted: #949ba4;
+    --zr-accent: #5865f2;
+    --zr-accent-strong: #7983f5;
+    --zr-accent-fg: #ffffff;
+    --zr-accent-soft: #404249;
+    --zr-accent-soft-fg: #ffffff;
+    --zr-link: #00a8fc;
+    --zr-mention: rgb(240 177 50 / 8%);
+    --zr-avatar-radius: 50%;
+    --zr-radius: 6px;
+    --zr-rail: #1e1f22;
+    --zr-rail-width: 72px;
+}
+
+/* Follows Zulip's light/dark setting. Selected rows are a gray wash rather
+   than an accent color, and the accent is kept for links and mentions. */
+html[data-zr-theme="notion"]:root {
+    --zr-bg: light-dark(#f7f7f5, #202020);
+    --zr-surface: light-dark(#ffffff, #191919);
+    --zr-surface-2: light-dark(#efefed, #2c2c2c);
+    --zr-dm-surface: light-dark(#ffffff, #191919);
+    --zr-border: light-dark(#ededeb, #2f2f2f);
+    --zr-text: light-dark(#37352f, #d4d4d4);
+    --zr-muted: light-dark(#73726e, #9b9b9b);
+    --zr-accent: light-dark(#2383e2, #529cca);
+    --zr-accent-strong: light-dark(#0b6bcb, #6fb1dc);
+    --zr-accent-fg: #ffffff;
+    --zr-accent-soft: light-dark(#e9e9e7, #2f2f2f);
+    --zr-accent-soft-fg: light-dark(#37352f, #ffffff);
+    --zr-link: light-dark(#2383e2, #529cca);
+    --zr-mention: light-dark(#fbf3db, #3a3424);
+    --zr-avatar-radius: 50%;
+    --zr-radius: 6px;
+}
+
 /* ---------- Zulip variable mapping (all themes) ---------- */
 
 html[data-zr-theme]:root {
@@ -350,3 +395,641 @@ html[data-zr-theme="reader"] .message_header .message-header-contents {
 html[data-zr-theme="reader"] .message_content {
     line-height: 1.6;
 }
+
+/* ---------- F. Discord ---------- */
+
+html[data-zr-theme="discord"]:root {
+    --color-background-navbar: var(--zr-bg);
+    --color-text-active-narrow-filter: #ffffff;
+    --color-text-sidebar-heading: var(--zr-muted);
+    --opacity-sidebar-heading: 1;
+    --letter-spacing-sidebar-heading: 0.02em;
+    --color-background-text-direct-mention: rgb(88 101 242 / 30%);
+    --color-background-text-group-mention: rgb(88 101 242 / 30%);
+    --color-text-self-direct-mention: #c9cdfb;
+    --color-text-self-group-mention: #c9cdfb;
+    --color-compose-message-content-background: #383a40;
+    --color-border-compose-content: transparent;
+    --color-user-circle-active: #23a55a;
+    --color-user-circle-idle: #f0b232;
+}
+
+html[data-zr-theme="discord"] #left-sidebar {
+    color: var(--zr-muted);
+}
+
+html[data-zr-theme="discord"] :is(.top_left_row, .bottom_left_row) {
+    border-radius: 6px;
+}
+
+/* Discord shows hover as a fill only, no outline. */
+html[data-zr-theme="discord"] :is(.top_left_row, .bottom_left_row):hover {
+    box-shadow: none;
+    color: var(--zr-text);
+}
+
+html[data-zr-theme="discord"] li:is(.active-filter, .top-left-active-filter, .active-sub-filter) {
+    border-radius: 6px;
+}
+
+/* Channel icons drop their per-channel color (set inline by Zulip). */
+html[data-zr-theme="discord"] #left-sidebar .stream-privacy {
+    color: #80848e !important;
+}
+
+/* Unread channels and DMs read as bright, bold names. */
+html[data-zr-theme="discord"] .subscription_block.has-unmuted-unreads .stream-name,
+html[data-zr-theme="discord"] .dm-list-item:not(.zero-dm-unreads) .conversation-partners {
+    color: #f2f3f5;
+    font-weight: 600;
+}
+
+/* Counts are quiet gray pills; DM counts are red, as Discord badges are. */
+html[data-zr-theme="discord"] #left-sidebar .unread_count {
+    background: #4e5058;
+    color: #ffffff;
+    border-radius: 8px;
+}
+
+html[data-zr-theme="discord"] #left-sidebar .dm-list-item .unread_count {
+    background: #f23f43;
+}
+
+html[data-zr-theme="discord"] .left-sidebar-title {
+    font-size: 0.8em;
+}
+
+/* DM rows with a 32px avatar (added by enhance.js) and the presence dot on
+   its corner, or a group icon in an accent circle. */
+html[data-zr-theme="discord"] .dm-box {
+    --left-sidebar-icon-column-width: 32px;
+    --left-sidebar-icon-content-gap: 12px;
+    padding-block: 5px;
+}
+
+html[data-zr-theme="discord"] .dm-box .zr-dm-avatar {
+    grid-area: starting-anchor-element;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+html[data-zr-theme="discord"] .dm-box:has(.zr-dm-avatar) .conversation-partners-icon.user-circle {
+    place-self: end end;
+    position: relative;
+    z-index: 1;
+    margin: -3px;
+    font-size: 10px;
+    border: 3px solid var(--zr-bg);
+    border-radius: 50%;
+    background: var(--zr-bg);
+}
+
+html[data-zr-theme="discord"] .dm-box[data-is-group="true"] .conversation-partners-icon {
+    place-self: center;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--zr-accent);
+    color: #ffffff;
+    font-size: 18px;
+}
+
+/* User list: round avatars, presence dot ringed in the sidebar color. */
+html[data-zr-theme="discord"] .user_sidebar_entry.with_avatar .user-profile-picture,
+html[data-zr-theme="discord"] .user_sidebar_entry.with_avatar .user-profile-picture img {
+    border-radius: 50% !important;
+}
+
+html[data-zr-theme="discord"] .user_sidebar_entry.with_avatar .user-circle {
+    border-width: 2.5px;
+}
+
+html[data-zr-theme="discord"] .user_sidebar_entry {
+    border-radius: 6px;
+}
+
+html[data-zr-theme="discord"] .user_sidebar_entry:hover {
+    background-color: var(--zr-surface-2);
+}
+
+html[data-zr-theme="discord"] .user_sidebar_entry.user-fade {
+    opacity: 0.4;
+}
+
+/* "THIS CONVERSATION (14)" -> "THIS CONVERSATION — 14". The parentheses are
+   bare text nodes, so the wrapper is shrunk to nothing and the count is
+   given its size back. */
+html[data-zr-theme="discord"] .buddy-list-heading {
+    color: var(--zr-muted);
+    font-size: 0.8em;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+html[data-zr-theme="discord"] .buddy-list-heading-user-count-with-parens {
+    font-size: 0;
+}
+
+html[data-zr-theme="discord"] .buddy-list-heading-user-count {
+    font-size: 0.8rem;
+}
+
+html[data-zr-theme="discord"] .buddy-list-heading-user-count::before {
+    content: "— ";
+}
+
+/* Names colored by rank (data-zr-rank comes from enhance.js). */
+html[data-zr-theme="discord"][data-zr-rank-colors="on"] {
+    [data-zr-rank="ibyeong"] { color: #b5bac1; }
+    [data-zr-rank="ilbyeong"] { color: #4cc38a; }
+    [data-zr-rank="sangbyeong"] { color: #5ba8f5; }
+    [data-zr-rank="byeongjang"] { color: #f0b232; }
+    [data-zr-rank="nco"] { color: #c29bf5; }
+    [data-zr-rank="officer"] { color: #f47fa4; }
+    [data-zr-rank="general"] { color: #f2696c; }
+}
+
+/* Messages sit flat on the background; mentions get a gold bar. */
+html[data-zr-theme="discord"] .message_row:is(.direct_mention, .group_mention) {
+    box-shadow: inset 2px 0 0 #f0b232;
+}
+
+html[data-zr-theme="discord"] .message_row:hover {
+    background-color: #2e3035;
+}
+
+html[data-zr-theme="discord"] .message_header .message-header-contents {
+    background: var(--zr-surface) !important;
+    color: #f2f3f5;
+}
+
+html[data-zr-theme="discord"] #compose-content {
+    border-radius: 8px;
+}
+
+/* The rail. enhance.js puts it inside #left-sidebar-container, so it
+   follows the sidebar when Zulip centers the layout and disappears with it.
+   Zulip offsets the sidebar contents and the middle column by
+   --left-sidebar-padding-left, so widening that makes room. */
+html[data-zr-theme="discord"][data-zr-rail="on"]:root {
+    --left-sidebar-padding-left: calc(var(--zr-rail-width) + 8px);
+}
+
+#zr-rail {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 101;
+    box-sizing: border-box;
+    width: var(--zr-rail-width);
+    padding: calc(var(--navbar-fixed-height) + 12px) 0 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    background: var(--zr-rail);
+}
+
+.column-left.expanded #zr-rail {
+    display: none;
+}
+
+.zr-rail-item {
+    position: relative;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 24px;
+    padding: 0;
+    background: var(--zr-surface);
+    color: var(--zr-text);
+    font: 600 15px/1 inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        border-radius 0.15s,
+        background-color 0.15s;
+}
+
+.zr-rail-item:hover,
+.zr-rail-item:focus-visible,
+.zr-rail-item[aria-current="true"] {
+    border-radius: 16px;
+    background: var(--zr-accent);
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.zr-rail-item:focus-visible {
+    outline: 2px solid #00a8fc;
+    outline-offset: 2px;
+}
+
+/* The pill on the left edge: short for unread, tall for the current one. */
+.zr-rail-item::before {
+    content: "";
+    position: absolute;
+    left: -12px;
+    width: 4px;
+    height: 0;
+    border-radius: 0 4px 4px 0;
+    background: #ffffff;
+    transition: height 0.15s;
+}
+
+.zr-rail-item.zr-unread::before {
+    height: 8px;
+}
+
+.zr-rail-item:hover::before {
+    height: 20px;
+}
+
+.zr-rail-item[aria-current="true"]::before {
+    height: 40px;
+}
+
+.zr-rail-glyph {
+    width: 24px;
+    height: 24px;
+    background-color: currentcolor;
+    mask: center / contain no-repeat;
+}
+
+.zr-rail-dm {
+    mask-image: var(--zr-i-dm);
+}
+
+.zr-rail-plus {
+    mask-image: var(--zr-i-square-plus);
+}
+
+.zr-rail-browse {
+    color: #23a55a;
+}
+
+.zr-rail-browse:hover,
+.zr-rail-browse:focus-visible {
+    background: #23a55a;
+}
+
+.zr-rail-sep {
+    flex: 0 0 2px;
+    width: 32px;
+    border-radius: 1px;
+    background: #35363c;
+}
+
+.zr-rail-badge {
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+    min-width: 16px;
+    height: 16px;
+    border: 4px solid var(--zr-rail);
+    border-radius: 12px;
+    background: #f23f43;
+    color: #ffffff;
+    font-size: 11px;
+    line-height: 16px;
+    text-align: center;
+}
+
+/* ---------- G. Notion ---------- */
+
+html[data-zr-theme="notion"]:root {
+    --color-text-active-narrow-filter: var(--zr-text);
+    --color-text-sidebar-heading: var(--zr-muted);
+    --opacity-sidebar-heading: 1;
+    --font-weight-sidebar-heading: 500;
+    --letter-spacing-sidebar-heading: 0;
+    --color-background-text-direct-mention: light-dark(#e7f3f8, #1f3540);
+    --color-background-text-group-mention: light-dark(#e7f3f8, #1f3540);
+    --color-text-self-direct-mention: var(--zr-accent);
+    --color-text-self-group-mention: var(--zr-accent);
+    --color-selected-message-outline: transparent;
+}
+
+html[data-zr-theme="notion"] #left-sidebar {
+    color: light-dark(#5f5e5b, #a5a5a5);
+}
+
+html[data-zr-theme="notion"] :is(.top_left_row, .bottom_left_row):hover {
+    box-shadow: none;
+}
+
+html[data-zr-theme="notion"] li:is(.active-filter, .top-left-active-filter, .active-sub-filter) {
+    border-radius: 6px;
+}
+
+html[data-zr-theme="notion"] #left-sidebar .stream-privacy {
+    color: var(--zr-muted) !important;
+}
+
+html[data-zr-theme="notion"] #left-sidebar-navigation-list .filter-icon i {
+    color: var(--zr-muted);
+}
+
+/* Unread counts are plain gray numbers. */
+html[data-zr-theme="notion"] #left-sidebar .unread_count {
+    background: transparent;
+    color: var(--zr-muted);
+    font-weight: 500;
+}
+
+html[data-zr-theme="notion"] .subscription_block.has-unmuted-unreads .stream-name,
+html[data-zr-theme="notion"] .dm-list-item:not(.zero-dm-unreads) .conversation-partners {
+    color: var(--zr-text);
+    font-weight: 600;
+}
+
+/* Section headings in sentence case: "VIEWS" -> "Views". Korean is
+   unaffected. Folder headings use the label enhance.js derives instead. */
+html[data-zr-theme="notion"] .left-sidebar-title {
+    font-size: 0.8em;
+    text-transform: lowercase;
+}
+
+html[data-zr-theme="notion"] .left-sidebar-title::first-letter {
+    text-transform: uppercase;
+}
+
+html[data-zr-theme="notion"] .stream-list-subsection-header .left-sidebar-title[data-zr-label] {
+    font-size: 0;
+    text-transform: none;
+}
+
+html[data-zr-theme="notion"] .stream-list-subsection-header .left-sidebar-title[data-zr-label]::after {
+    content: attr(data-zr-label);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--zr-text);
+}
+
+/* Folder badge: a tinted square with the folder's initial. */
+html[data-zr-theme="notion"] .stream-list-subsection-header .left-sidebar-title[data-zr-initial]::before {
+    content: attr(data-zr-initial);
+    display: inline-grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    margin-right: 7px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    vertical-align: -3px;
+    background: var(--zr-tint-bg);
+    color: var(--zr-tint-fg);
+}
+
+html[data-zr-theme="notion"] [data-zr-tint="0"] { --zr-tint-bg: light-dark(#d3e5ef, #28456c); --zr-tint-fg: light-dark(#28456c, #d3e5ef); }
+html[data-zr-theme="notion"] [data-zr-tint="1"] { --zr-tint-bg: light-dark(#e8deee, #492f64); --zr-tint-fg: light-dark(#492f64, #e8deee); }
+html[data-zr-theme="notion"] [data-zr-tint="2"] { --zr-tint-bg: light-dark(#dbeddb, #2b593f); --zr-tint-fg: light-dark(#2b593f, #dbeddb); }
+html[data-zr-theme="notion"] [data-zr-tint="3"] { --zr-tint-bg: light-dark(#fadec9, #854c1d); --zr-tint-fg: light-dark(#854c1d, #fadec9); }
+html[data-zr-theme="notion"] [data-zr-tint="4"] { --zr-tint-bg: light-dark(#f5e0e9, #69314c); --zr-tint-fg: light-dark(#69314c, #f5e0e9); }
+html[data-zr-theme="notion"] [data-zr-tint="5"] { --zr-tint-bg: light-dark(#fdecc8, #7a5a14); --zr-tint-fg: light-dark(#7a5a14, #fdecc8); }
+
+/* Channels under a folder are indented like sub-pages. */
+html[data-zr-theme="notion"] .stream-list-section .narrow-filter > .bottom_left_row {
+    margin-left: 12px;
+}
+
+/* DM rows with a small round avatar. */
+html[data-zr-theme="notion"] .dm-box {
+    --left-sidebar-icon-column-width: 20px;
+}
+
+html[data-zr-theme="notion"] .dm-box .zr-dm-avatar {
+    grid-area: starting-anchor-element;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+html[data-zr-theme="notion"] .dm-box:has(.zr-dm-avatar) .conversation-partners-icon.user-circle {
+    place-self: end end;
+    position: relative;
+    z-index: 1;
+    margin: -2px;
+    font-size: 7px;
+    border: 2px solid var(--zr-bg);
+    border-radius: 50%;
+    background: var(--zr-bg);
+}
+
+html[data-zr-theme="notion"] .dm-box[data-is-group="true"] .conversation-partners-icon {
+    place-self: center;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background: var(--zr-surface-2);
+    font-size: 13px;
+}
+
+/* User list: the right sidebar becomes a white side panel. */
+html[data-zr-theme="notion"] .app-main .column-right .right-sidebar {
+    background: var(--zr-surface);
+    border-left: 1px solid var(--zr-border);
+}
+
+html[data-zr-theme="notion"] .user_sidebar_entry.with_avatar .user-profile-picture,
+html[data-zr-theme="notion"] .user_sidebar_entry.with_avatar .user-profile-picture img {
+    border-radius: 50% !important;
+}
+
+html[data-zr-theme="notion"] .user_sidebar_entry {
+    border-radius: 6px;
+}
+
+html[data-zr-theme="notion"] .user_sidebar_entry:hover {
+    background-color: var(--zr-surface-2);
+}
+
+html[data-zr-theme="notion"] .buddy-list-heading {
+    color: var(--zr-muted);
+    font-size: 0.8em;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: lowercase;
+}
+
+html[data-zr-theme="notion"] .buddy-list-heading-text {
+    display: inline-block;
+}
+
+html[data-zr-theme="notion"] .buddy-list-heading-text::first-letter {
+    text-transform: uppercase;
+}
+
+html[data-zr-theme="notion"] .buddy-list-heading-user-count-with-parens {
+    font-size: 0;
+}
+
+html[data-zr-theme="notion"] .buddy-list-heading-user-count {
+    font-size: 0.8rem;
+}
+
+html[data-zr-theme="notion"] .buddy-list-heading-user-count::before {
+    content: "· ";
+}
+
+/* The navbar title reads as a breadcrumb. */
+html[data-zr-theme="notion"] #message_view_header {
+    color: var(--zr-muted);
+    font-weight: 400;
+}
+
+html[data-zr-theme="notion"] #message_view_header .message-header-navbar-title {
+    color: var(--zr-text);
+}
+
+/* Messages: flat rows, a soft yellow wash for mentions. */
+html[data-zr-theme="notion"] .message_row:hover {
+    background-color: light-dark(rgb(55 53 47 / 3%), rgb(255 255 255 / 3%));
+}
+
+html[data-zr-theme="notion"] .selected_message .messagebox-content {
+    outline: 0;
+}
+
+html[data-zr-theme="notion"] .message_header .message-header-contents {
+    color: var(--zr-muted);
+    font-weight: 500;
+}
+
+html[data-zr-theme="notion"] #compose-content {
+    border: 1px solid var(--zr-border);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgb(15 15 15 / 6%);
+}
+
+/* Page title above the feed (added by enhance.js). */
+#zr-page-title {
+    padding: 36px 16px 14px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--zr-border);
+    color: var(--zr-text);
+}
+
+#zr-page-title[hidden],
+#zr-page-title p[hidden] {
+    display: none;
+}
+
+#zr-page-title .zr-page-icon {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: var(--zr-surface-2);
+    color: var(--zr-muted);
+    font-size: 28px;
+}
+
+#zr-page-title h1 {
+    margin: 14px 0 4px;
+    font-size: 2.15em;
+    font-weight: 700;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+#zr-page-title p {
+    margin: 0;
+    color: var(--zr-muted);
+}
+
+/* ---------- Icons (generated by tools/build-icons.py) ---------- */
+
+html[data-zr-theme="discord"]:root {
+    --zr-i-inbox: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 13h5l1.5 3h5l1.5-3h5'/%3E%3Cpath d='M5.6 5h12.8L21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5z'/%3E%3C/svg%3E");
+    --zr-i-recent: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3.5 2'/%3E%3C/svg%3E");
+    --zr-i-all-messages: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6h16M4 12h16M4 18h11'/%3E%3C/svg%3E");
+    --zr-i-at-sign: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3.5'/%3E%3Cpath d='M15.5 8.5v4.7a2.5 2.5 0 0 0 5 0V12a8.5 8.5 0 1 0-3.4 6.8'/%3E%3C/svg%3E");
+    --zr-i-smile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8.5 14.5a4.5 4.5 0 0 0 7 0M9 9.5h.01M15 9.5h.01'/%3E%3C/svg%3E");
+    --zr-i-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z'/%3E%3C/svg%3E");
+    --zr-i-drafts: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 4H6.5A1.5 1.5 0 0 0 5 5.5v13A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V11'/%3E%3Cpath d='m17.5 3.5 3 3L13 14l-3.5.5.5-3.5z'/%3E%3C/svg%3E");
+    --zr-i-calendar-days: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.5' y='5' width='17' height='15' rx='2'/%3E%3Cpath d='M3.5 10h17M8 3v4M16 3v4'/%3E%3C/svg%3E");
+    --zr-i-alarm-clock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='13' r='7'/%3E%3Cpath d='M12 9.5V13l2 1.5M4 5.5 7 3M20 5.5 17 3'/%3E%3C/svg%3E");
+    --zr-i-hashtag: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9.5 4 7.5 20M16.5 4l-2 16M4.5 9h15M3.5 15h15'/%3E%3C/svg%3E");
+    --zr-i-lock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='11' width='14' height='9' rx='2'/%3E%3Cpath d='M8 11V8a4 4 0 0 1 8 0v3'/%3E%3C/svg%3E");
+    --zr-i-globe: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c2.5 2.7 3.5 5.7 3.5 9s-1 6.3-3.5 9c-2.5-2.7-3.5-5.7-3.5-9s1-6.3 3.5-9z'/%3E%3C/svg%3E");
+    --zr-i-dm-groups-3: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='8.5' r='3.5'/%3E%3Cpath d='M2.5 20a6.5 6.5 0 0 1 13 0M15.5 5.2a3.5 3.5 0 0 1 0 6.6M18 14.2a6.5 6.5 0 0 1 3.5 5.8'/%3E%3C/svg%3E");
+    --zr-i-square-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E");
+    --zr-i-dm: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 15a2 2 0 0 1-2 2H8.5L4 20.5V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z'/%3E%3C/svg%3E");
+}
+
+html[data-zr-theme="notion"]:root {
+    --zr-i-inbox: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 13h5l1.5 3h5l1.5-3h5'/%3E%3Cpath d='M5.6 5h12.8L21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5z'/%3E%3C/svg%3E");
+    --zr-i-recent: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3.5 2'/%3E%3C/svg%3E");
+    --zr-i-all-messages: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6h16M4 12h16M4 18h11'/%3E%3C/svg%3E");
+    --zr-i-at-sign: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3.5'/%3E%3Cpath d='M15.5 8.5v4.7a2.5 2.5 0 0 0 5 0V12a8.5 8.5 0 1 0-3.4 6.8'/%3E%3C/svg%3E");
+    --zr-i-smile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8.5 14.5a4.5 4.5 0 0 0 7 0M9 9.5h.01M15 9.5h.01'/%3E%3C/svg%3E");
+    --zr-i-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z'/%3E%3C/svg%3E");
+    --zr-i-drafts: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 4H6.5A1.5 1.5 0 0 0 5 5.5v13A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V11'/%3E%3Cpath d='m17.5 3.5 3 3L13 14l-3.5.5.5-3.5z'/%3E%3C/svg%3E");
+    --zr-i-calendar-days: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.5' y='5' width='17' height='15' rx='2'/%3E%3Cpath d='M3.5 10h17M8 3v4M16 3v4'/%3E%3C/svg%3E");
+    --zr-i-alarm-clock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='13' r='7'/%3E%3Cpath d='M12 9.5V13l2 1.5M4 5.5 7 3M20 5.5 17 3'/%3E%3C/svg%3E");
+    --zr-i-hashtag: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9.5 4 7.5 20M16.5 4l-2 16M4.5 9h15M3.5 15h15'/%3E%3C/svg%3E");
+    --zr-i-lock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='11' width='14' height='9' rx='2'/%3E%3Cpath d='M8 11V8a4 4 0 0 1 8 0v3'/%3E%3C/svg%3E");
+    --zr-i-globe: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c2.5 2.7 3.5 5.7 3.5 9s-1 6.3-3.5 9c-2.5-2.7-3.5-5.7-3.5-9s1-6.3 3.5-9z'/%3E%3C/svg%3E");
+    --zr-i-dm-groups-3: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='8.5' r='3.5'/%3E%3Cpath d='M2.5 20a6.5 6.5 0 0 1 13 0M15.5 5.2a3.5 3.5 0 0 1 0 6.6M18 14.2a6.5 6.5 0 0 1 3.5 5.8'/%3E%3C/svg%3E");
+    --zr-i-square-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E");
+    --zr-i-dm: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 15a2 2 0 0 1-2 2H8.5L4 20.5V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z'/%3E%3C/svg%3E");
+}
+
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-inbox::before,
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-recent::before,
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-all-messages::before,
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-at-sign::before,
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-smile::before,
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-star::before,
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-drafts::before,
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-calendar-days::before,
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-alarm-clock::before,
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-hashtag::before,
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-lock::before,
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-globe::before,
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-dm-groups-3::before,
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) :is(#left-sidebar, #message_view_header, #zr-page-title) .zulip-icon.zulip-icon-square-plus::before {
+    content: "";
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-color: currentcolor;
+    mask: var(--zr-icon) center / contain no-repeat;
+}
+
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-inbox { --zr-icon: var(--zr-i-inbox); }
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-recent { --zr-icon: var(--zr-i-recent); }
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-all-messages { --zr-icon: var(--zr-i-all-messages); }
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-at-sign { --zr-icon: var(--zr-i-at-sign); }
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-smile { --zr-icon: var(--zr-i-smile); }
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-star { --zr-icon: var(--zr-i-star); }
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-drafts { --zr-icon: var(--zr-i-drafts); }
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-calendar-days { --zr-icon: var(--zr-i-calendar-days); }
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-alarm-clock { --zr-icon: var(--zr-i-alarm-clock); }
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-hashtag { --zr-icon: var(--zr-i-hashtag); }
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-lock { --zr-icon: var(--zr-i-lock); }
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-globe { --zr-icon: var(--zr-i-globe); }
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-dm-groups-3 { --zr-icon: var(--zr-i-dm-groups-3); }
+:is(html[data-zr-theme="discord"], html[data-zr-theme="notion"]) .zulip-icon.zulip-icon-square-plus { --zr-icon: var(--zr-i-square-plus); }
+
+/* ---------- End of generated icons ---------- */

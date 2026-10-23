@@ -3,7 +3,7 @@
 
 const ZR_SCRIPT_ID = "zulip-restyle";
 const ZR_CSS_FILES = ["styles/restyle.css"];
-const ZR_JS_FILES = ["shared.js", "content.js"];
+const ZR_JS_FILES = ["shared.js", "enhance.js", "content.js"];
 
 const ZR_THEMES = [
   {
@@ -30,6 +30,18 @@ const ZR_THEMES = [
     desc: "아바타 없이 넓은 여백, 녹색 포인트",
     swatch: ["#F4F6F5", "#FFFFFF", "#1D6B57", "#16181B"],
   },
+  {
+    id: "discord",
+    name: "디스코드",
+    desc: "항상 다크, 폴더 레일과 계급별 이름 색",
+    swatch: ["#2B2D31", "#313338", "#5865F2", "#DBDEE1"],
+  },
+  {
+    id: "notion",
+    name: "노션",
+    desc: "문서 같은 사이드바, 큰 제목, 얇은 아이콘",
+    swatch: ["#F7F7F5", "#FFFFFF", "#2383E2", "#37352F"],
+  },
 ];
 
 const ZR_DEFAULT_SITE = {
@@ -38,6 +50,7 @@ const ZR_DEFAULT_SITE = {
   font: true,
   density: "normal", // compact | normal | relaxed
   width: "auto", // auto | narrow
+  rankColors: true, // discord theme only
 };
 
 // Accepts "zulip.example.com", "https://zulip.example.com/#narrow/...",
