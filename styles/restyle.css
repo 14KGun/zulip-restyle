@@ -1,0 +1,352 @@
+/*
+ * Restyle for Zulip
+ *
+ * Written against Zulip Server 12.0 (web/styles/app_variables.css). Zulip
+ * defines its palette as `light-dark()` custom properties on :root, so most
+ * of the work here is re-pointing those properties at our own tokens. Rules
+ * are scoped to the data-zr-* attributes content.js puts on <html>; without
+ * them this file does nothing.
+ *
+ * Selectors use `html[...]:root` (specificity 0,2,1) so they beat both
+ * Zulip's `:root` and `:root.dark-theme` declarations regardless of the
+ * order in which Chrome inserts this sheet.
+ */
+
+/* ---------- Fonts ---------- */
+
+@font-face {
+    font-family: "ZR Pretendard";
+    src: url("chrome-extension://__MSG_@@extension_id__/fonts/PretendardVariable.woff2")
+        format("woff2-variations");
+    font-weight: 45 920;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "ZR JetBrains Mono";
+    src: url("chrome-extension://__MSG_@@extension_id__/fonts/JetBrainsMono.woff2")
+        format("woff2-variations");
+    font-weight: 100 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ---------- Theme tokens ---------- */
+
+html[data-zr-theme="neutral"]:root {
+    --zr-bg: light-dark(#f7f7f5, #18191b);
+    --zr-surface: light-dark(#ffffff, #1f2023);
+    --zr-surface-2: light-dark(#f2f2ef, #26282c);
+    --zr-dm-surface: light-dark(#fbfaf6, #222226);
+    --zr-border: light-dark(#e1e1dd, #303236);
+    --zr-text: light-dark(#1f2328, #e6e7e9);
+    --zr-muted: light-dark(#5f6670, #9a9fa6);
+    --zr-accent: light-dark(#4f5bd5, #7c86f0);
+    --zr-accent-strong: light-dark(#3b47b8, #959efa);
+    --zr-accent-fg: #ffffff;
+    --zr-accent-soft: light-dark(#e6eaf8, #2a2f4d);
+    --zr-accent-soft-fg: light-dark(#2e3a86, #c9ceff);
+    --zr-link: light-dark(#3b47b8, #9aa3ff);
+    --zr-mention: light-dark(#eef0fb, #262a45);
+    --zr-avatar-radius: 8px;
+    --zr-radius: 8px;
+}
+
+/* Always dark: forcing color-scheme makes every Zulip `light-dark()` value
+   resolve to its dark half even when the user has Zulip set to light. */
+html[data-zr-theme="dark-pro"]:root {
+    color-scheme: dark;
+    --zr-bg: #0f1216;
+    --zr-surface: #13161b;
+    --zr-surface-2: #1f242c;
+    --zr-dm-surface: #171a20;
+    --zr-border: #262b33;
+    --zr-text: #e6e8eb;
+    --zr-muted: #9aa3af;
+    --zr-accent: #3dd6c4;
+    --zr-accent-strong: #5fe3d4;
+    --zr-accent-fg: #0b1f1d;
+    --zr-accent-soft: #10302c;
+    --zr-accent-soft-fg: #3dd6c4;
+    --zr-link: #8fd9f0;
+    --zr-mention: #12302c;
+    --zr-avatar-radius: 6px;
+    --zr-radius: 6px;
+}
+
+html[data-zr-theme="bubble"]:root {
+    --zr-bg: light-dark(#f6f7f9, #15171b);
+    --zr-surface: light-dark(#ffffff, #1b1e23);
+    --zr-surface-2: light-dark(#f2f4f7, #24282e);
+    --zr-dm-surface: light-dark(#ffffff, #1b1e23);
+    --zr-border: light-dark(#e2e5ea, #2c3138);
+    --zr-text: light-dark(#191b1f, #e4e7eb);
+    --zr-muted: light-dark(#5c6370, #9ba3ae);
+    --zr-accent: light-dark(#2563eb, #4f8bff);
+    --zr-accent-strong: light-dark(#1d4ed8, #7ea8ff);
+    --zr-accent-fg: #ffffff;
+    --zr-accent-soft: light-dark(#dce7fd, #1e2c4a);
+    --zr-accent-soft-fg: light-dark(#1e40af, #a9c4ff);
+    --zr-link: light-dark(#1d4ed8, #7ea8ff);
+    --zr-mention: light-dark(#ffffff, #1b1e23);
+    --zr-bubble: light-dark(#eef0f3, #262a31);
+    --zr-bubble-dm: light-dark(#fbefe3, #3a2e22);
+    --zr-avatar-radius: 50%;
+    --zr-radius: 14px;
+}
+
+html[data-zr-theme="reader"]:root {
+    --zr-bg: light-dark(#f4f6f5, #121614);
+    --zr-surface: light-dark(#ffffff, #171b19);
+    --zr-surface-2: light-dark(#eef0ef, #202623);
+    --zr-dm-surface: light-dark(#fbfcfb, #1a1f1c);
+    --zr-border: light-dark(#e1e5e3, #2a312d);
+    --zr-text: light-dark(#16181b, #e3e8e5);
+    --zr-muted: light-dark(#555b62, #9aa59f);
+    --zr-accent: light-dark(#1d6b57, #4fb394);
+    --zr-accent-strong: light-dark(#124a3c, #6cc9aa);
+    --zr-accent-fg: light-dark(#ffffff, #0d1a15);
+    --zr-accent-soft: light-dark(#e3eee8, #1c3029);
+    --zr-accent-soft-fg: light-dark(#1d5b45, #9bd9c3);
+    --zr-link: light-dark(#1d6b57, #6cc9aa);
+    --zr-mention: light-dark(#edf4f0, #1b2a24);
+    --zr-avatar-radius: 8px;
+    --zr-radius: 8px;
+}
+
+/* ---------- Zulip variable mapping (all themes) ---------- */
+
+html[data-zr-theme]:root {
+    /* Surfaces */
+    --color-background: var(--zr-bg);
+    --color-background-navbar: var(--zr-surface);
+    --color-background-stream-message-content: var(--zr-surface);
+    --color-background-private-message-content: var(--zr-dm-surface);
+    --color-background-private-message-header: var(--zr-dm-surface);
+    --color-background-inbox-row: var(--zr-surface);
+    --color-background-recent-view-row: var(--zr-surface);
+    --color-background-popover: var(--zr-surface);
+    --color-background-popover-menu: var(--zr-surface);
+    --color-background-search: var(--zr-surface);
+    --color-compose-box-background: var(--zr-surface);
+    --color-compose-message-content-background: var(--zr-surface);
+
+    /* Lines */
+    --color-message-list-border: transparent;
+    --color-message-header-contents-border: transparent;
+    --color-message-header-contents-border-bottom: var(--zr-border);
+    --color-private-message-header-border: transparent;
+    --color-private-message-header-border-bottom: var(--zr-border);
+    --color-border-sidebar: var(--zr-border);
+    --color-navbar-bottom-border: var(--zr-border);
+    --color-border-compose-content: var(--zr-border);
+    --color-border-popover-menu: var(--zr-border);
+
+    /* Text */
+    --color-text-default: var(--zr-text);
+    --color-text-message-default: var(--zr-text);
+    --color-text-item: var(--zr-muted);
+    --color-date: var(--zr-muted);
+    --color-text-link: var(--zr-link);
+    --color-text-link-hover: var(--zr-accent-strong);
+    --color-text-url: var(--zr-link);
+    --color-text-url-hover: var(--zr-accent-strong);
+    --color-markdown-link: var(--zr-link);
+    --color-markdown-link-hover: var(--zr-accent-strong);
+
+    /* Sidebar states */
+    --color-background-active-narrow-filter: var(--zr-accent-soft);
+    --color-background-hover-narrow-filter: var(--zr-surface-2);
+    --color-background-sidebar-action-hover: var(--zr-surface-2);
+
+    /* Signals */
+    --color-unread-marker: var(--zr-accent);
+    --color-selected-message-outline: color-mix(in srgb, var(--zr-accent) 45%, transparent);
+    --color-outline-focus: var(--zr-accent);
+    --color-background-direct-mention: var(--zr-mention);
+    --color-background-group-mention: var(--zr-mention);
+    --color-background-text-direct-mention: var(--zr-accent-soft);
+    --color-background-text-group-mention: var(--zr-accent-soft);
+    --color-text-self-direct-mention: var(--zr-accent-soft-fg);
+    --color-text-self-group-mention: var(--zr-accent-soft-fg);
+    --color-compose-send-button-background: var(--zr-accent);
+    --color-compose-send-button-background-interactive: var(--zr-accent-strong);
+    --color-compose-send-button-icon-color: var(--zr-accent-fg);
+
+    /* Code */
+    --color-markdown-code-background: var(--zr-surface-2);
+    --color-markdown-pre-background: var(--zr-surface-2);
+}
+
+/* The middle column sits on a white(ish) sheet while the sidebars keep the
+   tinted background, like the mockups. */
+html[data-zr-theme] .app-main .column-middle,
+html[data-zr-theme] #main_div {
+    background-color: var(--zr-surface);
+}
+
+/* Recipient bars carry an inline per-channel background color. Flatten them
+   into a quiet heading. */
+html[data-zr-theme] .message_header .message-header-contents {
+    background: var(--zr-surface) !important;
+    border-radius: 0;
+    font-weight: 600;
+}
+
+html[data-zr-theme] .message_header_private_message .message-header-contents {
+    background: var(--zr-dm-surface) !important;
+}
+
+html[data-zr-theme] .inline_profile_picture {
+    border-radius: var(--zr-avatar-radius);
+}
+
+html[data-zr-theme] .selected_message .messagebox-content {
+    border-radius: var(--zr-radius);
+}
+
+html[data-zr-theme] #compose-content {
+    border-radius: calc(var(--zr-radius) + 4px);
+}
+
+html[data-zr-theme] .sender_name {
+    font-weight: 650;
+}
+
+html[data-zr-theme] .message-time {
+    color: var(--zr-muted);
+}
+
+/* ---------- Fonts ---------- */
+
+html[data-zr-theme][data-zr-font="on"] body,
+html[data-zr-theme][data-zr-font="on"] input,
+html[data-zr-theme][data-zr-font="on"] textarea,
+html[data-zr-theme][data-zr-font="on"] select,
+html[data-zr-theme][data-zr-font="on"] button {
+    font-family:
+        "ZR Pretendard", "Pretendard Variable", Pretendard, "Source Sans 3 VF",
+        "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    /* Pretendard is designed for -0.2% to -1% tracking on Korean UI text. */
+    letter-spacing: -0.005em;
+}
+
+html[data-zr-theme][data-zr-font="on"] code,
+html[data-zr-theme][data-zr-font="on"] pre,
+html[data-zr-theme][data-zr-font="on"] kbd {
+    font-family:
+        "ZR JetBrains Mono", "JetBrains Mono", "Source Code Pro", "D2Coding",
+        ui-monospace, monospace;
+    letter-spacing: 0;
+}
+
+/* ---------- Density ---------- */
+
+html[data-zr-theme][data-zr-density="compact"]:root {
+    --line-height-sidebar-row-prominent: 1.5em;
+    --line-height-sidebar-row: 1.4em;
+}
+
+html[data-zr-theme][data-zr-density="compact"] .messagebox-includes-sender {
+    padding-top: 0;
+}
+
+html[data-zr-theme][data-zr-density="compact"] .recipient_row {
+    margin-bottom: 4px;
+}
+
+html[data-zr-theme][data-zr-density="relaxed"]:root {
+    --line-height-sidebar-row-prominent: 2em;
+    --line-height-sidebar-row: 1.85em;
+}
+
+html[data-zr-theme][data-zr-density="relaxed"] .messagebox-includes-sender {
+    padding-top: 6px;
+}
+
+html[data-zr-theme][data-zr-density="relaxed"] .message_content {
+    line-height: 1.6;
+}
+
+html[data-zr-theme][data-zr-density="relaxed"] .recipient_row {
+    margin-bottom: 18px;
+}
+
+/* ---------- Reading width ---------- */
+
+html[data-zr-theme][data-zr-width="narrow"] div.message-list,
+html[data-zr-theme][data-zr-width="narrow"] #compose-content {
+    max-width: 820px;
+    margin-inline: auto;
+}
+
+/* ========== Theme-specific details ========== */
+
+/* ---------- B. Dark pro ---------- */
+
+html[data-zr-theme="dark-pro"] .message-time {
+    font-family: "ZR JetBrains Mono", "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.8em;
+    letter-spacing: 0;
+}
+
+html[data-zr-theme="dark-pro"] .sender_name,
+html[data-zr-theme="dark-pro"] .sender_name_text {
+    color: var(--zr-link);
+}
+
+html[data-zr-theme="dark-pro"] .message_header .message-header-contents {
+    background: var(--zr-bg) !important;
+}
+
+/* ---------- D. Bubble ---------- */
+
+html[data-zr-theme="bubble"] .messagebox-content > .message_content:not(.status-message) {
+    justify-self: start;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 4px;
+    padding: 8px 13px;
+    border-radius: var(--zr-radius);
+    background: var(--zr-bubble);
+}
+
+html[data-zr-theme="bubble"] .private-message .messagebox-content > .message_content:not(.status-message) {
+    background: var(--zr-bubble-dm);
+}
+
+/* Mentions get an outlined bubble instead of a tinted row. */
+html[data-zr-theme="bubble"] :is(.direct_mention, .group_mention) .messagebox-content > .message_content {
+    background: var(--zr-surface);
+    box-shadow: inset 0 0 0 1.5px var(--zr-accent);
+}
+
+html[data-zr-theme="bubble"] .selected_message .messagebox-content {
+    outline-color: transparent;
+}
+
+html[data-zr-theme="bubble"] .selected_message .messagebox-content > .message_content {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--zr-accent) 35%, transparent);
+}
+
+html[data-zr-theme="bubble"] #compose-content {
+    border-radius: 22px;
+}
+
+/* ---------- E. Reader ---------- */
+
+/* Avatars are hidden but their grid column stays, since Zulip also puts the
+   "EDITED" marker there; the result is an even left gutter. */
+html[data-zr-theme="reader"] .message-avatar {
+    visibility: hidden;
+}
+
+html[data-zr-theme="reader"] .message_header .message-header-contents {
+    font-size: 1.1em;
+}
+
+html[data-zr-theme="reader"] .message_content {
+    line-height: 1.6;
+}

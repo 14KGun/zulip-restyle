@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>Restyle for Zulip</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header class="top">
+      <img src="../icons/icon32.png" alt="" width="20" height="20" />
+      <h1>Restyle for Zulip</h1>
+    </header>
+
+    <section id="current" class="current" hidden>
+      <div class="current-text">
+        <span class="label">현재 탭</span>
+        <strong id="current-host"></strong>
+      </div>
+      <button id="add-current" class="btn primary" type="button">이 사이트에 적용</button>
+    </section>
+
+    <form id="add-form" class="add-form">
+      <input
+        id="domain-input"
+        type="text"
+        placeholder="zulip.example.com 또는 *.example.com"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button class="btn" type="submit">추가</button>
+    </form>
+    <p id="form-error" class="error" hidden></p>
+
+    <section>
+      <h2>적용할 도메인</h2>
+      <ul id="sites" class="sites"></ul>
+      <p id="empty" class="empty">아직 등록한 도메인이 없어요. 위에서 Zulip 주소를 추가하세요.</p>
+    </section>
+
+    <section id="settings" class="settings" hidden>
+      <h2><span id="settings-host"></span> 설정</h2>
+
+      <div class="themes" id="themes" role="radiogroup" aria-label="테마"></div>
+
+      <div class="row">
+        <span class="row-label">한글 글꼴 (Pretendard)</span>
+        <label class="switch">
+          <input type="checkbox" id="opt-font" />
+          <span></span>
+        </label>
+      </div>
+
+      <div class="row">
+        <span class="row-label">화면 밀도</span>
+        <div class="seg" data-opt="density">
+          <button type="button" data-value="compact">촘촘</button>
+          <button type="button" data-value="normal">기본</button>
+          <button type="button" data-value="relaxed">여유</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <span class="row-label">본문 폭</span>
+        <div class="seg" data-opt="width">
+          <button type="button" data-value="auto">기본</button>
+          <button type="button" data-value="narrow">좁게</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">변경 사항은 열린 탭에 바로 반영돼요.</footer>
+
+    <script src="../shared.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
