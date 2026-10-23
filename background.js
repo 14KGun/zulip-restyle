@@ -8,9 +8,9 @@ async function grantedPatterns() {
   const { sites = {} } = await chrome.storage.sync.get("sites");
   const patterns = [];
   for (const host of Object.keys(sites)) {
-    const pattern = zrHostToPattern(host);
-    if (await chrome.permissions.contains({ origins: [pattern] })) {
-      patterns.push(pattern);
+    const origins = zrHostToPatterns(host);
+    if (await chrome.permissions.contains({ origins })) {
+      patterns.push(...origins);
     }
   }
   return patterns;

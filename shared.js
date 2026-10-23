@@ -61,9 +61,12 @@ function zrNormalizeHost(input) {
   return wildcard ? "*." + host : host;
 }
 
-// Match patterns ignore the port, so one pattern covers every port on the host.
-function zrHostToPattern(host) {
-  return `*://${host}/*`;
+// Match patterns ignore the port, so these cover every port on the host.
+// The schemes are listed separately because chrome.permissions.request only
+// accepts origins contained in a single optional_host_permissions entry, and
+// `*://` is contained in neither "http://*/*" nor "https://*/*" on its own.
+function zrHostToPatterns(host) {
+  return [`http://${host}/*`, `https://${host}/*`];
 }
 
 function zrHostMatches(pattern, hostname) {
