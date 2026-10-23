@@ -15,7 +15,7 @@ async function load() {
   state.sites = sites;
   state.granted = new Set();
   for (const host of Object.keys(sites)) {
-    if (await chrome.permissions.contains({ origins: [zrHostToPattern(host)] })) {
+    if (await chrome.permissions.contains({ origins: zrHostToPatterns(host) })) {
       state.granted.add(host);
     }
   }
@@ -34,7 +34,7 @@ function save() {
 // popup closes while Chrome's permission prompt is open; the service worker
 // registers the script once permissions.onAdded fires.
 function addSite(host) {
-  const request = chrome.permissions.request({ origins: [zrHostToPattern(host)] });
+  const request = chrome.permissions.request({ origins: zrHostToPatterns(host) });
   if (!state.sites[host]) {
     state.sites[host] = { ...ZR_DEFAULT_SITE };
   }
@@ -50,7 +50,7 @@ function addSite(host) {
 
 function grant(host) {
   chrome.permissions
-    .request({ origins: [zrHostToPattern(host)] })
+    .request({ origins: zrHostToPatterns(host) })
     .then((ok) => {
       if (ok) state.granted.add(host);
     })
@@ -62,13 +62,9 @@ async function removeSite(host) {
   delete state.sites[host];
   if (state.selected === host) state.selected = Object.keys(state.sites)[0] || null;
   await save();
-  // Drop the host permission too, unless another saved entry still needs it.
-  const pattern = zrHostToPattern(host);
-  const stillUsed = Object.keys(state.sites).some((h) => zrHostToPattern(h) === pattern);
-  if (!stillUsed) {
-    await chrome.permissions.remove({ origins: [pattern] }).catch(() => {});
-    state.granted.delete(host);
-  }
+  // Drop the host permission too; each saved host has its own patterns.
+  await chrome.permissions.remove({ origins: zrHostToPatterns(host) }).catch(() => {});
+  state.granted.delete(host);
   render();
 }
 
